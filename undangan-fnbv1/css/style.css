@@ -1986,7 +1986,7 @@
     padding-bottom: 9rem;
     background:
         url('../images/bunga.png') top center / min(340px, 78%) auto no-repeat,
-        url('../images/bunga.png') bottom center / min(340px, 78%) auto no-repeat,
+        url('../images/cover-bunga.png') center bottom -50px / 100% auto no-repeat,
         linear-gradient(rgba(253, 251, 247, 0.72), rgba(253, 251, 247, 0.72)),
         url('../images/wallpaper-bunga.jpg') center / 900px auto repeat-y,
         var(--ivory);
@@ -1995,4 +1995,25 @@
 .hero-date-year,
 .hero-date-day {
     font-variant-numeric: lining-nums;
+}
+
+/* Credit footer */
+.credit-godinov {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.85;
+}
+
+.credit-godinov a {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(226, 192, 122, 0.5);
+    padding-bottom: 1px;
+    transition: opacity 0.2s;
+}
+
+.credit-godinov a:hover {
+    opacity: 0.75;
 }
