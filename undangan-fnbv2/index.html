@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id" prefix="og: https://ogp.me/ns#">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undangan Pernikahan Fitria & Barkah — 3 Oktober 2026</title>
+    <meta name="description"
+        content="Dengan penuh kebahagiaan kami mengundang Anda untuk menyaksikan dan mendoakan pernikahan Fitria Ramadhani & Achmad Subarkah pada 3 Oktober 2026 di Kalideres, Jakarta Barat." />
+
+    <!-- Canonical URL (Penting agar link dengan parameter seperti ?to=... tetap dikenali sebagai URL utama dan menggunakan cache Open Graph yang sama) -->
+    <link rel="canonical" href="https://undangan-fitria-dan-barkah.vercel.app/" />
+    <link rel="icon" type="image/svg+xml" href="icon/logo.svg" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://undangan-fitria-dan-barkah.vercel.app/" />
+    <meta property="og:site_name" content="Undangan Pernikahan Fitria & Barkah" />
+    <meta property="og:title" content="Undangan Pernikahan Fitria & Barkah" />
+    <meta property="og:description" content="Sabtu, 3 Oktober 2026 · Kalideres, Jakarta Barat" />
+    <meta property="og:image" content="https://undangan-fitria-dan-barkah.vercel.app/images/hero.jpg" />
+    <meta property="og:image:secure_url" content="https://undangan-fitria-dan-barkah.vercel.app/images/hero.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1000" />
+    <meta property="og:image:height" content="1332" />
+    <meta property="og:image:alt" content="Undangan Pernikahan Fitria & Barkah" />
+
+    <!-- Schema.org Microdata (Fallback untuk WhatsApp Android & Google scraper) -->
+    <meta itemprop="name" content="Undangan Pernikahan Fitria & Barkah" />
+    <meta itemprop="description" content="Sabtu, 3 Oktober 2026 · Kalideres, Jakarta Barat" />
+    <meta itemprop="image" content="https://undangan-fitria-dan-barkah.vercel.app/images/hero.jpg" />
+
+    <!-- Twitter / Telegram / Discord -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://undangan-fitria-dan-barkah.vercel.app/" />
+    <meta name="twitter:title" content="Undangan Pernikahan Fitria & Barkah" />
+    <meta name="twitter:description" content="Sabtu, 3 Oktober 2026 · Kalideres, Jakarta Barat" />
+    <meta name="twitter:image" content="https://undangan-fitria-dan-barkah.vercel.app/images/hero.jpg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <!-- Bootstrap Icons (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="locked">
+
+    <!-- Canvas for falling petals -->
+    <canvas id="petalsCanvas"></canvas>
+
+    <!-- ========================
+       OPENING GATE
+    ========================= -->
+    <div id="gate" role="dialog" aria-modal="true" aria-label="Opening undangan pernikahan">
+        <!-- Corner florals with Bootstrap Icons -->
+        <div class="gate-corner tl" aria-hidden="true"><i class="bi bi-flower1"></i></div>
+        <div class="gate-corner tr" aria-hidden="true"><i class="bi bi-flower1"></i></div>
+        <div class="gate-corner bl" aria-hidden="true"><i class="bi bi-flower3"></i></div>
+        <div class="gate-corner br" aria-hidden="true"><i class="bi bi-flower3"></i></div>
+
+        <div class="gate-inner">
+            <div class="gate-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+            <div class="gate-divider-gold"></div>
+            <span class="gate-label"><i class="bi bi-stars"></i> Bismillah, Our Forever Starts Here <i
+                    class="bi bi-stars"></i></span>
+
+            <div class="gate-photo">
+                <img src="images/gate.jpg" alt="Foto Fitria & Barkah" />
+            </div>
+
+            <div class="gate-label">Undangan Pernikahan</div>
+
+            <div class="gate-names">
+                Fitria <span>&nbsp;&amp;&nbsp;</span>Barkah
+            </div>
+
+            <div class="gate-date">Sabtu · 3 Oktober 2026 · Jakarta Barat</div>
+
+            <div class="gate-divider-gold" style="margin-top:0.8rem;"></div>
+
+            <div class="gate-guest-label">Kepada Yth.</div>
+            <div class="gate-guest-name" id="guestName">Tamu Undangan</div>
+
+            <button id="btnOpen" aria-label="Buka undangan pernikahan">
+                <i class="bi bi-envelope-open-heart"></i>
+                <span>Buka Undangan</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================
+       MAIN CONTENT
+    ========================= -->
+    <div id="mainContent" aria-hidden="true">
+
+        <!-- 1. HERO -->
+        <section id="hero" aria-label="Hero — Fitria & Barkah">
+            <p class="hero-tag" data-reveal><i class="bi bi-stars"></i> Wedding Invitation <i class="bi bi-stars"></i>
+            </p>
+            <p class="hero-the-wedding-of" data-reveal>The Wedding Of</p>
+
+            <div class="hero-arch-wrap" data-reveal="scale">
+                <div class="hero-arch-frame">
+                    <img src="images/hero.jpg" alt="Foto prewedding Fitria & Barkah" />
+                </div>
+                <div class="hero-monogram">
+                    <img src="icon/logo.svg" alt="Monogram Logo Fitria & Barkah" class="monogram-logo" />
+                </div>
+            </div>
+
+            <div class="hero-names" data-reveal>
+                Fitria
+                <span class="hero-amp">&</span>
+                Barkah
+            </div>
+
+            <div class="hero-date-wrap" data-reveal>
+                <div class="hero-date-row">
+                    <div class="hero-date-day">
+                        <small>Hari</small>
+                        Sabtu
+                    </div>
+                    <div class="hero-date-divider"></div>
+                    <div class="hero-date-number">
+                        3
+                        <small>Oktober</small>
+                    </div>
+                    <div class="hero-date-divider"></div>
+                    <div class="hero-date-year">
+                        <small>Tahun</small>
+                        2026
+                    </div>
+                </div>
+            </div>
+
+            <p class="hero-tag" style="margin-top:1.5rem;" data-reveal>
+                <i class="bi bi-geo-alt-fill"></i> Kalideres · Jakarta Barat
+            </p>
+        </section>
+
+        <!-- 2. VERSE / BISMILLAH STRIP -->
+        <section id="verse-strip" aria-label="Ayat pernikahan">
+            <i class="bi bi-bluesky verse-corner-icon tl" aria-hidden="true"></i>
+            <i class="bi bi-bluesky verse-corner-icon br" aria-hidden="true"></i>
+            <div class="floral-ornament" aria-hidden="true">
+                <i class="bi bi-flower1"></i>
+                <i class="bi bi-suit-heart-fill" style="font-size:0.9rem;"></i>
+                <i class="bi bi-flower1"></i>
+            </div>
+            <p class="verse-arabic" data-reveal>
+                وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ
+                بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً
+            </p>
+            <p class="verse-translation" data-reveal>
+                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu
+                sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih
+                dan sayang."
+            </p>
+            <p class="verse-source" data-reveal>Q.S. Ar-Rum : 21</p>
+            <div class="floral-ornament" style="margin-top:1rem;" aria-hidden="true">
+                <i class="bi bi-flower1"></i>
+                <i class="bi bi-suit-heart-fill" style="font-size:0.9rem;"></i>
+                <i class="bi bi-flower1"></i>
+            </div>
+        </section>
+
+        <!-- 3. QUOTE SECTION (PAPER TEAR) -->
+        <section id="quote" aria-label="Kutipan cinta">
+            <div class="paper-tear-top" aria-hidden="true"></div>
+            <div class="quote-inner">
+                <span class="quote-mark" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                <p class="quote-text" data-reveal>
+                    All because two people fell in love — dan Allah menyatukan dua hati yang saling melengkapi, dalam
+                    ikatan yang penuh berkah dan kasih sayang.
+                </p>
+                <p class="quote-author" data-reveal>
+                    <i class="bi bi-stars"></i> Fitria &amp; Barkah <i class="bi bi-stars"></i>
+                </p>
+            </div>
+            <div class="paper-tear-bottom" aria-hidden="true"></div>
+        </section>
+
+        <!-- 4. MEMPELAI (CENTERED) -->
+        <section id="mempelai" aria-label="Profil kedua mempelai">
+            <span class="section-label" data-reveal>
+                <i class="bi bi-suit-heart-fill"></i> Kedua Mempelai <i class="bi bi-suit-heart-fill"></i>
+            </span>
+            <h1 class="section-title" data-reveal>Dengan Penuh Kebahagiaan</h1>
+            <div class="gold-divider" data-reveal>
+                <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-gem"></i></span>
+            </div>
+
+            <div class="mempelai-grid">
+                <!-- Fitria -->
+                <div class="mempelai-card" data-reveal="left">
+                    <div class="mempelai-photo-arch">
+                        <img src="images/bride.jpg" alt="Foto Fitria Ramadhani" />
+                    </div>
+                    <p class="mempelai-role"><i class="bi bi-person-heart"></i> Mempelai Wanita</p>
+                    <p class="mempelai-name-script">Fitria</p>
+                    <p class="mempelai-name-full">Fitria Ramadhani</p>
+                    <p class="mempelai-parents">
+                        Putri keempat dari 4 bersaudara<br />
+                        <strong>Bapak Jumchoir</strong><br />
+                        &amp; <strong>Ibu Ela Haryati</strong>
+                    </p>
+                </div>
+
+                <!-- Divider & -->
+                <div class="mempelai-divider-center" aria-hidden="true">
+                    <span class="mempelai-and" data-reveal="scale">&</span>
+                </div>
+
+                <!-- Barkah -->
+                <div class="mempelai-card" data-reveal="right">
+                    <div class="mempelai-photo-arch">
+                        <img src="images/groom.jpg" alt="Foto Achmad Subarkah" />
+                    </div>
+                    <p class="mempelai-role"><i class="bi bi-person-fill"></i> Mempelai Pria</p>
+                    <p class="mempelai-name-script">Barkah</p>
+                    <p class="mempelai-name-full">Achmad Subarkah (Barkah)</p>
+                    <p class="mempelai-parents">
+                        Putra keempat dari 4 bersaudara<br />
+                        <strong>Bapak H. Paino</strong><br />
+                        &amp; <strong>Ibu Hj. Siti Maemunah</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DETAIL ACARA -->
+        <section id="detail-acara" aria-label="Detail acara pernikahan">
+            <span class="section-label" data-reveal>
+                <i class="bi bi-calendar-event"></i> Detail Acara <i class="bi bi-calendar-event"></i>
+            </span>
+            <h2 class="section-title" data-reveal>Hari Istimewa <em>Kami</em></h2>
+            <div class="gold-divider" data-reveal>
+                <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-calendar-heart"></i></span>
+            </div>
+
+            <!-- Countdown -->
+            <div class="countdown-wrap" data-reveal="scale">
+                <p class="countdown-label-top">
+                    <i class="bi bi-hourglass-split"></i> Menghitung Hari
+                </p>
+                <div class="countdown-grid">
+                    <div class="countdown-unit">
+                        <span class="countdown-number" id="cdDays">00</span>
+                        <span class="countdown-unit-label">Hari</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span class="countdown-number" id="cdHours">00</span>
+                        <span class="countdown-unit-label">Jam</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span class="countdown-number" id="cdMins">00</span>
+                        <span class="countdown-unit-label">Menit</span>
+                    </div>
+                    <div class="countdown-unit">
+                        <span class="countdown-number" id="cdSecs">00</span>
+                        <span class="countdown-unit-label">Detik</span>
+                    </div>
+                </div>
+
+                <!-- Single Calendar Button below Countdown -->
+                <div class="countdown-btn-wrap">
+                    <a id="btnCal" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary"
+                        aria-label="Tambahkan tanggal pernikahan ke Google Calendar">
+                        <i class="bi bi-calendar-plus"></i> Tambahkan ke Kalender
+                    </a>
+                </div>
+            </div>
+
+            <!-- Event cards with Custom SVG Icons -->
+            <div class="events-grid" data-reveal>
+                <div class="event-card">
+                    <div class="event-icon" aria-hidden="true">
+                        <img src="icon/akad.svg" alt="Akad Nikah" class="event-svg-icon" />
+                    </div>
+                    <p class="event-name">Sesi I</p>
+                    <p class="event-title">Akad Nikah</p>
+                    <p class="event-time">08.00 WIB</p>
+                    <p class="event-day">Sabtu, 3 Oktober 2026</p>
+                </div>
+                <div class="event-card">
+                    <div class="event-icon" aria-hidden="true">
+                        <img src="icon/resepsi.svg" alt="Resepsi Pernikahan" class="event-svg-icon" />
+                    </div>
+                    <p class="event-name">Sesi II</p>
+                    <p class="event-title">Resepsi Pernikahan</p>
+                    <p class="event-time">10.00 WIB — Selesai</p>
+                    <p class="event-day">Sabtu, 3 Oktober 2026</p>
+                </div>
+            </div>
+
+            <!-- Venue card -->
+            <div class="venue-badge" data-reveal="scale">
+                <p class="venue-badge-label">
+                    <i class="bi bi-building-check"></i> Lokasi Acara
+                </p>
+                <div class="venue-badge-icon" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></div>
+                <p class="venue-name">Kediaman Mempelai Wanita</p>
+                <p class="venue-address">Jalan Kebon 200 RT.003 RW.006, Kel. Kamal<br />Kec. Kalideres, Jakarta Barat</p>
+
+                <div class="btn-group">
+                    <a id="btnMaps" href="https://maps.app.goo.gl/zEb5eVtJuqFjvNJf7?g_st=iw" target="_blank"
+                        rel="noopener noreferrer" class="btn-primary" aria-label="Buka lokasi di Google Maps">
+                        <i class="bi bi-geo-alt-fill"></i> Buka di Google Maps
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 6. OUR LOVE STORY SECTION -->
+        <section id="love-story" aria-label="Our Love Story — Kisah Perjalanan Cinta">
+            <div class="love-story-inner">
+                <span class="section-label" data-reveal>
+                    <i class="bi bi-heart-half"></i> Our Journey <i class="bi bi-heart-half"></i>
+                </span>
+                <h2 class="section-title" data-reveal>Our Love <em>Story</em></h2>
+                <div class="gold-divider" data-reveal>
+                    <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-infinity"></i></span>
+                </div>
+                <p class="love-story-subtitle" data-reveal>
+                    Setiap cerita cinta itu indah, namun kisah kami adalah yang paling kami syukuri
+                </p>
+
+                <div class="story-timeline">
+                    <!-- 1. Awal yang Sederhana -->
+                    <div class="story-card" data-reveal="left">
+                        <div class="story-card-header">
+                            <span class="story-badge"><i class="bi bi-chat-dots-fill"></i> Chapter 01 · 2015</span>
+                        </div>
+                        <h3 class="story-title">1. "Awal yang Sederhana"</h3>
+                        <div class="story-line"></div>
+                        <p class="story-text">
+                            Semua berawal dari pertemuan yang tak pernah kami rencanakan. Dari obrolan sederhana melalui
+                            pesan singkat di BBM (BlackBerry Messenger) pada Tahun 2015, berlanjut menjadi tawa yang
+                            menghangatkan, hingga rasa nyaman yang tumbuh perlahan.
+                        </p>
+                        <p class="story-text">
+                            Saat itu, kami belum tahu bahwa perkenalan ini akan menjadi awal dari perjalanan panjang
+                            yang kelak membawa kami pulang pada hati yang sama.
+                        </p>
+                    </div>
+
+                    <!-- 2. Jeda yang Mengajarkan -->
+                    <div class="story-card" data-reveal="right">
+                        <div class="story-card-header">
+                            <span class="story-badge"><i class="bi bi-hourglass-split"></i> Chapter 02 · The
+                                Pause</span>
+                        </div>
+                        <h3 class="story-title">2. "Jeda yang Mengajarkan"</h3>
+                        <div class="story-line"></div>
+                        <p class="story-text">
+                            Tidak semua kisah berjalan tanpa luka. Pernah ada waktu ketika kami memilih berjalan di arah
+                            berbeda, mencoba melupakan, dan hidup tanpa satu sama lain.
+                        </p>
+                        <p class="story-text">
+                            Ternyata, jarak tidak mampu memadamkan rasa, dan waktu justru mengajarkan bahwa hati selalu
+                            tahu ke mana harus kembali.
+                        </p>
+                    </div>
+
+                    <!-- 3. Dipertemukan Kembali -->
+                    <div class="story-card" data-reveal="left">
+                        <div class="story-card-header">
+                            <span class="story-badge"><i class="bi bi-arrow-repeat"></i> Chapter 03 · Reunited</span>
+                        </div>
+                        <h3 class="story-title">3. "Dipertemukan Kembali"</h3>
+                        <div class="story-line"></div>
+                        <p class="story-text">
+                            Takdir mempertemukan kami sekali lagi. Kali ini bukan sekadar untuk mengulang cerita,
+                            melainkan untuk memperbaiki apa yang pernah rapuh.
+                        </p>
+                        <p class="story-text">
+                            Kami belajar bahwa cinta bukan tentang tak pernah berpisah, tetapi tentang keberanian untuk
+                            kembali memilih orang yang sama, meski telah melewati banyak ujian.
+                        </p>
+                    </div>
+
+                    <!-- 4. Selamanya Memilih -->
+                    <div class="story-card highlight" data-reveal="right">
+                        <div class="story-card-header">
+                            <span class="story-badge"
+                                style="background: rgba(201, 164, 92, 0.25); border-color: var(--gold);"><i
+                                    class="bi bi-gem"></i> Chapter 04 · Forever</span>
+                        </div>
+                        <h3 class="story-title">4. "Selamanya Memilih"</h3>
+                        <div class="story-line" style="background: var(--gold-light);"></div>
+                        <p class="story-text">
+                            Kini, perjalanan itu membawa kami pada langkah yang paling kami nantikan. Dengan doa, restu,
+                            dan keyakinan, kami memutuskan untuk mengikat janji suci dalam satu ikatan pernikahan.
+                        </p>
+                        <p class="story-text">
+                            Semoga kisah yang pernah putus dan kembali menyatu ini menjadi awal dari cinta yang terus
+                            bertumbuh, saling menguatkan, dan bertahan hingga akhir waktu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. GALLERY (4 PHOTOS) -->
+        <section id="galeri" aria-label="Galeri foto prewedding">
+            <span class="section-label" data-reveal>
+                <i class="bi bi-camera"></i> Galeri Foto <i class="bi bi-camera"></i>
+            </span>
+            <h2 class="section-title" data-reveal>Momen <em>Berharga</em> Kami</h2>
+            <div class="gold-divider" data-reveal>
+                <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-vignette"></i></span>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item" id="gallery-0" role="button" tabindex="0"
+                    aria-label="Lihat foto galeri 1 lebih besar" data-src="images/galeri1.jpg" data-reveal="left">
+                    <img src="images/galeri1.jpg" alt="Foto prewedding Fitria &amp; Barkah 1" loading="lazy" />
+                    <div class="gallery-item-overlay">
+                        <span><i class="bi bi-zoom-in"></i> Lihat Foto</span>
+                    </div>
+                </div>
+                <div class="gallery-item" id="gallery-1" role="button" tabindex="0"
+                    aria-label="Lihat foto galeri 2 lebih besar" data-src="images/galeri2.jpg" data-reveal="right">
+                    <img src="images/galeri2.jpg" alt="Foto prewedding Fitria &amp; Barkah 2" loading="lazy" />
+                    <div class="gallery-item-overlay">
+                        <span><i class="bi bi-zoom-in"></i> Lihat Foto</span>
+                    </div>
+                </div>
+                <div class="gallery-item" id="gallery-2" role="button" tabindex="0"
+                    aria-label="Lihat foto galeri 3 lebih besar" data-src="images/galeri3.jpg" data-reveal="left">
+                    <img src="images/galeri3.jpg" alt="Foto prewedding Fitria &amp; Barkah 3" loading="lazy" />
+                    <div class="gallery-item-overlay">
+                        <span><i class="bi bi-zoom-in"></i> Lihat Foto</span>
+                    </div>
+                </div>
+                <div class="gallery-item" id="gallery-3" role="button" tabindex="0"
+                    aria-label="Lihat foto galeri 4 lebih besar" data-src="images/galeri4.jpg" data-reveal="right">
+                    <img src="images/galeri4.jpg" alt="Foto prewedding Fitria &amp; Barkah 4" loading="lazy" />
+                    <div class="gallery-item-overlay">
+                        <span><i class="bi bi-zoom-in"></i> Lihat Foto</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div id="lightbox" role="dialog" aria-modal="true" aria-label="Preview foto">
+            <button id="lightboxClose" aria-label="Tutup preview foto">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <img id="lightboxImg" src="" alt="Preview foto prewedding" />
+        </div>
+
+        <!-- 8. BUKU TAMU -->
+        <section id="buku-tamu" aria-label="Buku tamu — ucapan dan doa restu">
+            <div class="buku-tamu-inner">
+                <span class="section-label" data-reveal>
+                    <i class="bi bi-chat-heart"></i> Buku Tamu <i class="bi bi-chat-heart"></i>
+                </span>
+                <h2 class="section-title" data-reveal style="color:var(--maroon-main);">Ucapan &amp; <em
+                        style="color:var(--maroon-soft);">Doa Restu</em></h2>
+                <div class="gold-divider" data-reveal>
+                    <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-envelope-heart"></i></span>
+                </div>
+
+                <div class="buku-tamu-form" data-reveal>
+                    <p id="wishGreeting" class="wish-greeting" style="display:none;"></p>
+                    <form id="wishForm" novalidate>
+                        <div class="form-group">
+                            <label class="form-label" for="wishName">
+                                <i class="bi bi-person"></i> Nama Anda
+                            </label>
+                            <input class="form-input" type="text" id="wishName" name="wishName"
+                                placeholder="Masukkan nama Anda..." required autocomplete="name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="wishMsg">
+                                <i class="bi bi-chat-text"></i> Ucapan &amp; Doa Restu
+                            </label>
+                            <textarea class="form-textarea" id="wishMsg" name="wishMsg"
+                                placeholder="Tuliskan ucapan dan doa restu Anda untuk kedua mempelai..."
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" id="btnWishSubmit">
+                            <i class="bi bi-send-fill"></i> Kirim Ucapan
+                        </button>
+                    </form>
+                </div>
+
+                <div id="wishesList" aria-live="polite" aria-label="Daftar ucapan"></div>
+
+                <!-- Pagination (5 items per page) -->
+                <div id="wishesPagination" class="wishes-pagination" style="display: none;">
+                    <button id="btnPrevWish" class="btn-page" aria-label="Halaman sebelumnya">
+                        <i class="bi bi-chevron-left"></i> Sebelumnya
+                    </button>
+                    <span id="wishPageInfo" class="wish-page-info">Halaman 1 dari 1</span>
+                    <button id="btnNextWish" class="btn-page" aria-label="Halaman selanjutnya">
+                        Berikutnya <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. TANDA KASIH -->
+        <section id="tanda-kasih" aria-label="Tanda kasih — hadiah digital">
+            <span class="section-label" data-reveal>
+                <i class="bi bi-gift"></i> Tanda Kasih <i class="bi bi-gift"></i>
+            </span>
+            <h2 class="section-title" data-reveal>Hadiah <em>Digital</em></h2>
+            <div class="gold-divider" data-reveal>
+                <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-gift-fill"></i></span>
+            </div>
+            <p class="tanda-kasih-desc" data-reveal>
+                Doa restu Anda adalah hadiah terindah bagi kami. Namun jika Anda ingin memberikan tanda kasih, berikut
+                informasinya:
+            </p>
+
+            <div class="bank-cards-grid">
+                <!-- BNI -->
+                <div class="bank-card" data-reveal="left">
+                    <div class="bank-logo-wrapper">
+                        <img src="icon/bank_bni.svg" alt="Bank BNI" class="bank-logo-img bni" />
+                    </div>
+                    <p class="bank-logo bni">Bank BNI</p>
+                    <p class="bank-account-label">Nomor Rekening</p>
+                    <p class="bank-account-number" id="bniNum">1796682818</p>
+                    <p class="bank-account-name">Achmad Subarkah</p>
+                    <button class="btn-copy" id="btnCopyBni" aria-label="Salin nomor rekening Bank BNI"
+                        data-account="1796682818">
+                        <i class="bi bi-clipboard-check"></i> Salin Nomor Rekening
+                    </button>
+                </div>
+
+                <!-- SeaBank -->
+                <div class="bank-card" data-reveal="right">
+                    <div class="bank-logo-wrapper">
+                        <img src="icon/bank_seabank.svg" alt="SeaBank" class="bank-logo-img seabank" />
+                    </div>
+                    <p class="bank-logo seabank">SeaBank</p>
+                    <p class="bank-account-label">Nomor Rekening</p>
+                    <p class="bank-account-number" id="seabankNum">901057012328</p>
+                    <p class="bank-account-name">Fitria Ramadhani</p>
+                    <button class="btn-copy" id="btnCopySeabank" aria-label="Salin nomor rekening SeaBank"
+                        data-account="901057012328">
+                        <i class="bi bi-clipboard-check"></i> Salin Nomor Rekening
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. PENUTUP -->
+        <section id="penutup" aria-label="Penutup undangan">
+            <div class="penutup-inner">
+                <div class="penutup-monogram" aria-hidden="true">
+                    <img src="icon/logo.svg" alt="Monogram Logo Fitria & Barkah" class="monogram-logo" />
+                </div>
+                <p class="penutup-thanks" data-reveal>Terima Kasih</p>
+
+                <p class="penutup-text" data-reveal>
+                    Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan
+                    memberikan doa restu kepada kami.
+                </p>
+
+                <div class="penutup-quote" data-reveal>
+                    <i class="bi bi-heart-fill" style="color:var(--gold);"></i> "Bismillah, Our Forever Starts Here" <i
+                        class="bi bi-heart-fill" style="color:var(--gold);"></i>
+                </div>
+
+                <div class="gold-divider" data-reveal>
+                    <span class="gold-divider-icon" aria-hidden="true"><i class="bi bi-suit-heart-fill"></i></span>
+                </div>
+                <p class="penutup-text" data-reveal>
+                    Hormat kami yang mengundang
+                </p>
+                <p class="penutup-names" data-reveal>Fitria &amp; Barkah</p>
+                <p style="margin-top:1rem; font-family:var(--font-body); font-size:0.72rem; letter-spacing:0.2em; color:var(--gold); opacity:0.7;"
+                    data-reveal>
+                    03 · 10 · 2026
+                </p>
+                <br>
+                <p class="credit-godinov" data-reveal>
+                    Made with <a href="https://godinov.id" target="_blank" rel="noopener noreferrer">Godinov</a>
+                </p>
+            </div>
+        </section>
+
+    </div><!-- /#mainContent -->
+
+    <!-- Floating Audio Control -->
+    <div id="audioControl">
+        <button id="btnAudio" aria-label="Putar/Jeda musik">
+            <i class="bi bi-music-note-beamed"></i>
+        </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Audio Element -->
+    <audio id="weddingAudio" loop preload="auto">
+        <source src="music/wedding-song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- ========================
+       JAVASCRIPT
+    ========================= -->
+    <script src="js/script.js" defer></script>
+
+</body>
+
+</html>

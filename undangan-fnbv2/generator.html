@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Generator Link Undangan — Fitria & Barkah</title>
+    <link rel="icon" type="image/svg+xml" href="icon/logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --green-deep: #0B2A1C;
+            --green: #123D2A;
+            --green-soft: #3F7D5E;
+            --ivory: #F5EFE3;
+            --ivory-light: #FDFBF7;
+            --gold: #C9A45C;
+            --gold-dark: #A07830;
+            --radius: 14px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            color: var(--green-deep);
+            background:
+                linear-gradient(rgba(253, 251, 247, 0.78), rgba(253, 251, 247, 0.78)),
+                url('images/wallpaper-bunga.jpg') center / cover fixed,
+                var(--ivory);
+            min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+        }
+
+        .wrap { max-width: 760px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 1.8rem; }
+        header img { width: 64px; height: 64px; padding: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; margin-top: .6rem; color: var(--green); }
+        header p { font-size: .85rem; opacity: .75; margin-top: .3rem; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(201, 164, 92, 0.35);
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1.1rem;
+            box-shadow: 0 6px 24px rgba(11, 42, 28, 0.08);
+        }
+
+        label { display: block; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--gold-dark); margin-bottom: .4rem; }
+        .hint { font-size: .78rem; opacity: .7; margin-top: .35rem; line-height: 1.5; }
+
+        input, textarea {
+            width: 100%;
+            font: inherit;
+            font-size: .92rem;
+            padding: .7rem .8rem;
+            border: 1px solid rgba(18, 61, 42, 0.25);
+            border-radius: 10px;
+            background: var(--ivory-light);
+            color: var(--green-deep);
+        }
+        textarea { min-height: 130px; resize: vertical; line-height: 1.5; }
+        input:focus, textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+        .row { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+        button, .btn {
+            font: inherit;
+            font-size: .82rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            padding: .65rem 1rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            transition: transform .12s, opacity .12s;
+        }
+        button:active { transform: scale(.97); }
+        .primary { background: linear-gradient(135deg, var(--green), var(--green-deep)); color: var(--ivory-light); }
+        .ghost { background: transparent; border-color: rgba(18, 61, 42, 0.35); color: var(--green); }
+        .wa { background: #1f9d55; color: #fff; }
+
+        .result-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; margin-bottom: .8rem; }
+        .result-head h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--green); }
+
+        .item { border-top: 1px dashed rgba(160, 120, 48, 0.4); padding: .8rem 0; }
+        .item:first-child { border-top: 0; }
+        .item-name { font-weight: 600; }
+        .item-link { font-size: .78rem; word-break: break-all; opacity: .7; margin: .2rem 0 .55rem; }
+        .item .row button, .item .row a { padding: .45rem .75rem; font-size: .76rem; }
+
+        .empty { text-align: center; opacity: .6; font-size: .9rem; padding: 1rem 0; }
+
+        #toast {
+            position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px);
+            background: var(--green-deep); color: var(--ivory-light);
+            padding: .6rem 1.1rem; border-radius: 999px; font-size: .82rem;
+            opacity: 0; pointer-events: none; transition: .25s;
+        }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <img src="icon/logo.svg" alt="Logo F & B" />
+            <h1>Generator Link Undangan</h1>
+            <p>Buat link personal per tamu, lalu kirim lewat WhatsApp.</p>
+        </header>
+
+        <section class="card">
+            <label for="baseUrl">Alamat undangan</label>
+            <input id="baseUrl" type="url" placeholder="https://undangan-anda.vercel.app/" />
+            <p class="hint">Isi dengan alamat undangan yang sudah online. Otomatis terisi kalau halaman ini dibuka dari domain yang sama.</p>
+        </section>
+
+        <section class="card">
+            <label for="names">Daftar tamu</label>
+            <textarea id="names" placeholder="Satu tamu per baris, contoh:&#10;Rifki&#10;Bapak Ahmad & Keluarga, 081234567890&#10;Ibu Siti"></textarea>
+            <p class="hint">Satu tamu per baris. Boleh tambah nomor WhatsApp setelah koma agar tombol kirim langsung menuju kontaknya (awalan 0 otomatis jadi 62).</p>
+        </section>
+
+        <section class="card">
+            <label for="template">Pesan WhatsApp</label>
+            <textarea id="template" style="min-height:170px"></textarea>
+            <p class="hint">Gunakan <b>{nama}</b> untuk nama tamu dan <b>{link}</b> untuk link undangannya.</p>
+            <div class="row" style="margin-top:.9rem">
+                <button class="primary" id="btnGenerate">Buat Link</button>
+                <button class="ghost" id="btnReset">Kosongkan</button>
+            </div>
+        </section>
+
+        <section class="card" id="results" style="display:none">
+            <div class="result-head">
+                <h2>Hasil (<span id="count">0</span>)</h2>
+                <div class="row">
+                    <button class="ghost" id="btnCopyAll">Salin semua link</button>
+                    <button class="ghost" id="btnCsv">Unduh CSV</button>
+                </div>
+            </div>
+            <div id="list"></div>
+        </section>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var DEFAULT_BASE = 'https://undangan-fitria-dan-barkah.vercel.app/';
+            var DEFAULT_TEMPLATE =
+                'Assalamu\'alaikum Wr. Wb.\n\n' +
+                'Kepada Yth. {nama},\n\n' +
+                'Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir di acara pernikahan kami:\n' +
+                'Fitria Ramadhani & Achmad Subarkah (Barkah)\n' +
+                'Sabtu, 3 Oktober 2026\n\n' +
+                'Detail acara dan lokasi dapat dilihat pada undangan digital berikut:\n{link}\n\n' +
+                'Merupakan kehormatan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.\n\n' +
+                'Terima kasih.\nWassalamu\'alaikum Wr. Wb.';
+
+            var $ = function (id) { return document.getElementById(id); };
+            var baseEl = $('baseUrl'), namesEl = $('names'), tplEl = $('template');
+            var listEl = $('list'), resultsEl = $('results'), countEl = $('count');
+            var rows = [];
+
+            function store(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+            function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+            // Alamat awal: domain yang sama bila sudah online, selain itu tersimpan / default
+            var isOnline = /^https?:$/.test(location.protocol) && !/^(localhost|127\.)/.test(location.hostname);
+            var guessed = isOnline ? location.origin + location.pathname.replace(/[^\/]*$/, '') : '';
+            baseEl.value = load('gen_base') || guessed || DEFAULT_BASE;
+            tplEl.value = load('gen_tpl') || DEFAULT_TEMPLATE;
+            namesEl.value = load('gen_names') || '';
+
+            function toast(msg) {
+                var t = $('toast');
+                t.textContent = msg;
+                t.classList.add('show');
+                setTimeout(function () { t.classList.remove('show'); }, 1800);
+            }
+
+            function copy(text, msg) {
+                var done = function () { toast(msg || 'Tersalin!'); };
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+                } else { fallback(); }
+                function fallback() {
+                    var ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.select();
+                    try { document.execCommand('copy'); done(); } catch (e) { toast('Gagal menyalin'); }
+                    document.body.removeChild(ta);
+                }
+            }
+
+            function normBase(v) {
+                v = (v || '').trim();
+                if (!v) return '';
+                if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+                v = v.split('?')[0].split('#')[0];
+                if (!/\/$/.test(v) && !/\.html?$/i.test(v)) v += '/';
+                return v;
+            }
+
+            function normPhone(p) {
+                var d = (p || '').replace(/[^\d]/g, '');
+                if (!d) return '';
+                if (d.indexOf('0') === 0) d = '62' + d.slice(1);
+                else if (d.indexOf('8') === 0) d = '62' + d;
+                return d;
+            }
+
+            function parse() {
+                var base = normBase(baseEl.value);
+                var out = [];
+                namesEl.value.split(/\r?\n/).forEach(function (line) {
+                    line = line.trim();
+                    if (!line) return;
+                    var i = line.lastIndexOf(',');
+                    var name = line, phone = '';
+                    if (i > -1 && /^[\d\s+\-()]{8,}$/.test(line.slice(i + 1).trim())) {
+                        name = line.slice(0, i).trim();
+                        phone = normPhone(line.slice(i + 1));
+                    }
+                    name = name.replace(/\s+/g, ' ').slice(0, 40);
+                    if (!name) return;
+                    var link = base + '?to=' + encodeURIComponent(name);
+                    var msg = tplEl.value.replace(/\{nama\}/gi, name).replace(/\{link\}/gi, link);
+                    out.push({ name: name, phone: phone, link: link, msg: msg });
+                });
+                return out;
+            }
+
+            function render() {
+                listEl.innerHTML = '';
+                countEl.textContent = rows.length;
+                resultsEl.style.display = 'block';
+                if (!rows.length) {
+                    listEl.innerHTML = '<p class="empty">Belum ada nama. Isi daftar tamu dulu.</p>';
+                    return;
+                }
+                rows.forEach(function (r) {
+                    var d = document.createElement('div');
+                    d.className = 'item';
+
+                    var n = document.createElement('div'); n.className = 'item-name'; n.textContent = r.name;
+                    var l = document.createElement('div'); l.className = 'item-link'; l.textContent = r.link;
+                    var b = document.createElement('div'); b.className = 'row';
+
+                    var c1 = document.createElement('button'); c1.className = 'ghost'; c1.textContent = 'Salin link';
+                    c1.onclick = function () { copy(r.link, 'Link ' + r.name + ' tersalin'); };
+                    var c2 = document.createElement('button'); c2.className = 'ghost'; c2.textContent = 'Salin pesan';
+                    c2.onclick = function () { copy(r.msg, 'Pesan ' + r.name + ' tersalin'); };
+                    var w = document.createElement('a'); w.className = 'btn wa'; w.target = '_blank'; w.rel = 'noopener noreferrer';
+                    w.textContent = 'Kirim WhatsApp';
+                    w.href = 'https://wa.me/' + r.phone + '?text=' + encodeURIComponent(r.msg);
+                    var t = document.createElement('a'); t.className = 'btn ghost'; t.target = '_blank'; t.rel = 'noopener noreferrer';
+                    t.textContent = 'Tes buka'; t.href = r.link;
+
+                    b.append(c1, c2, w, t);
+                    d.append(n, l, b);
+                    listEl.appendChild(d);
+                });
+            }
+
+            $('btnGenerate').onclick = function () {
+                store('gen_base', baseEl.value.trim());
+                store('gen_tpl', tplEl.value);
+                store('gen_names', namesEl.value);
+                rows = parse();
+                render();
+                if (rows.length) toast(rows.length + ' link dibuat');
+            };
+
+            $('btnReset').onclick = function () {
+                namesEl.value = ''; rows = []; store('gen_names', '');
+                resultsEl.style.display = 'none';
+            };
+
+            $('btnCopyAll').onclick = function () {
+                if (!rows.length) return;
+                copy(rows.map(function (r) { return r.name + '\t' + r.link; }).join('\n'), 'Semua link tersalin');
+            };
+
+            $('btnCsv').onclick = function () {
+                if (!rows.length) return;
+                var q = function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; };
+                var csv = 'nama,whatsapp,link\n' + rows.map(function (r) {
+                    return [q(r.name), q(r.phone), q(r.link)].join(',');
+                }).join('\n');
+                var a = document.createElement('a');
+                a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+                a.download = 'link-undangan.csv';
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            };
+
+            if (namesEl.value.trim()) { rows = parse(); render(); }
+        })();
+    </script>
+</body>
+
+</html>
