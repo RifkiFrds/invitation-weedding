@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Manual Generator Link Undangan</title>
+<style>
+  @page { size: A4; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1e2b23;
+    font-size: 11pt;
+    line-height: 1.55;
+    background: #fff;
+  }
+  .cover {
+    page-break-after: always;
+    min-height: 260mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40mm 20mm;
+    background: linear-gradient(160deg, #F5EFE3 0%, #FDFBF7 100%);
+    border: 2px solid #C9A45C;
+  }
+  .cover .logo {
+    width: 90px; height: 90px;
+    background: linear-gradient(135deg, #C9A45C, #A07830);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 2.5rem; font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+  }
+  .cover h1 {
+    font-family: 'Georgia', 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    color: #123D2A;
+    margin: 10px 0 6px;
+    font-weight: 600;
+  }
+  .cover .subtitle {
+    font-size: 1.1rem;
+    color: #A07830;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  .cover .divider {
+    width: 60px;
+    height: 2px;
+    background: #C9A45C;
+    margin: 20px 0;
+  }
+  .cover .couple {
+    font-family: 'Georgia', serif;
+    font-size: 1.6rem;
+    color: #123D2A;
+    font-style: italic;
+    margin: 20px 0;
+  }
+  .cover .meta {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  h2 {
+    color: #123D2A;
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #C9A45C;
+  }
+  h3 {
+    color: #A07830;
+    font-size: 1.05rem;
+    margin: 18px 0 6px;
+    letter-spacing: 0.05em;
+  }
+  p { margin: 6px 0 10px; }
+  ul, ol { margin: 6px 0 12px 20px; padding: 0; }
+  li { margin-bottom: 4px; }
+
+  .chapter {
+    page-break-before: always;
+    padding-top: 10mm;
+  }
+  .chapter:first-of-type { page-break-before: auto; }
+
+  .chapter-num {
+    display: inline-block;
+    background: #123D2A;
+    color: #F5EFE3;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .callout {
+    background: #FDF8EC;
+    border-left: 4px solid #C9A45C;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 0.95em;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout.info { background: #EEF6F1; border-left-color: #3F7D5E; }
+  .callout.warn { background: #FDF0E0; border-left-color: #d97706; }
+  .callout strong { color: #123D2A; }
+
+  .screenshot {
+    display: block;
+    margin: 12px auto;
+    max-width: 100%;
+    border: 1px solid #d9d2c0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    page-break-inside: avoid;
+  }
+  .screenshot.small { max-width: 60%; }
+  .screenshot.mobile { max-width: 40%; }
+  .caption {
+    text-align: center;
+    font-size: 0.82em;
+    color: #888;
+    margin-top: -4px;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .toc {
+    padding-top: 10mm;
+  }
+  .toc ol { list-style: none; margin: 0; padding: 0; }
+  .toc li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #d9d2c0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+  .toc li strong { color: #123D2A; }
+
+  code {
+    background: #F5EFE3;
+    color: #A07830;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 0.92em;
+  }
+
+  .step-list {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+  }
+  .step-list li {
+    counter-increment: step;
+    position: relative;
+    padding: 10px 0 10px 42px;
+    border-bottom: 1px solid #eee;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 8px;
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, #C9A45C, #A07830);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.92em;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+  }
+  th {
+    background: #F5EFE3;
+    color: #123D2A;
+  }
+
+  .footer-note {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.85em;
+    color: #888;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== COVER ==================== -->
+  <div class="cover">
+    <div class="logo">F&amp;B</div>
+    <div class="subtitle">Manual Book</div>
+    <h1>Generator Link Undangan</h1>
+    <div class="divider"></div>
+    <div class="couple">Fitria &amp; Barkah</div>
+    <p style="max-width:400px; color:#555;">
+      Panduan praktis membuat &amp; membagikan link undangan digital personal untuk setiap tamu.
+    </p>
+    <div class="meta">
+      <div>Website: <strong>undangan-fitria-dan-barkah.vercel.app</strong></div>
+      <div>Halaman Generator: <strong>/generator</strong></div>
+      <div>Versi 1.0 · 2026</div>
+    </div>
+  </div>
+
+  <!-- ==================== TOC ==================== -->
+  <div class="toc chapter">
+    <h2>Daftar Isi</h2>
+    <ol>
+      <li><strong>1. Pengenalan</strong><span>hal. 3</span></li>
+      <li><strong>2. Cara Mengakses</strong><span>hal. 4</span></li>
+      <li><strong>3. Panduan Langkah demi Langkah</strong><span>hal. 5</span></li>
+      <li><strong>4. Fitur Tombol</strong><span>hal. 7</span></li>
+      <li><strong>5. Pengaturan Lanjutan</strong><span>hal. 8</span></li>
+      <li><strong>6. Tampilan Mobile</strong><span>hal. 9</span></li>
+      <li><strong>7. Tips &amp; Troubleshooting</strong><span>hal. 10</span></li>
+    </ol>
+  </div>
+
+  <!-- ==================== BAB 1 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 1</span>
+    <h2>Pengenalan</h2>
+    <p>
+      <strong>Generator Link Undangan</strong> adalah alat bantu untuk membuat link undangan
+      digital yang <strong>personal per tamu</strong>. Cukup ketik nama tamu, sistem akan
+      otomatis menghasilkan link unik &amp; pesan WhatsApp siap kirim.
+    </p>
+
+    <h3>Kelebihan</h3>
+    <ul>
+      <li>Nama tamu <strong>otomatis muncul</strong> di halaman pembuka undangan.</li>
+      <li>Tidak perlu input nomor WhatsApp — cukup nama.</li>
+      <li>Satu tombol untuk kirim via WhatsApp / Bagikan ke aplikasi lain.</li>
+      <li>Data tersimpan otomatis di browser (tidak hilang saat tab ditutup).</li>
+      <li>Bisa ekspor ke CSV untuk arsip data tamu.</li>
+    </ul>
+
+    <div class="callout info">
+      <strong>Konsep utama:</strong> tidak lagi mencari nomor kontak dulu. Cukup ketik nama →
+      klik tombol WhatsApp → pilih kontak → kirim. Selesai.
+    </div>
+  </div>
+
+  <!-- ==================== BAB 2 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 2</span>
+    <h2>Cara Mengakses</h2>
+
+    <p>Buka salah satu alamat berikut di browser (Chrome, Safari, Edge, dsb.):</p>
+    <ul>
+      <li><code>https://undangan-fitria-dan-barkah.vercel.app/generator</code></li>
+      <li>atau <code>.../generator.html</code></li>
+    </ul>
+
+    <div class="callout">
+      Halaman ini <strong>tidak terindeks Google</strong> &amp; tidak ada link ke sini dari
+      halaman utama undangan. Bagikan URL-nya hanya untuk pemakaian internal.
+    </div>
+
+    <h3>Tampilan awal</h3>
+    <img class="screenshot" src="screenshots/01-initial.png" alt="Tampilan awal generator" />
+    <div class="caption">Gambar 2.1 — Tampilan halaman generator saat pertama kali dibuka</div>
+  </div>
+
+  <!-- ==================== BAB 3 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 3</span>
+    <h2>Panduan Langkah demi Langkah</h2>
+
+    <ol class="step-list">
+      <li>
+        <strong>Ketik nama tamu</strong> pada kolom <em>Daftar Tamu</em>.<br />
+        Aturannya: <strong>satu nama per baris</strong>. Nama boleh panjang, boleh mengandung
+        gelar (Bapak, Ibu, H., Sdri., dll.).
+      </li>
+      <li>
+        Contoh isian:
+        <pre style="background:#F5EFE3;padding:8px 12px;border-radius:6px;font-size:0.85em;margin-top:6px;">Bapak Ahmad &amp; Keluarga
+Ibu Siti Nurhayati
+Rifki
+Keluarga Bapak Budi Santoso
+Sdri. Dewi Anggraini</pre>
+      </li>
+      <li>
+        Klik tombol <strong>“Buat Link Undangan”</strong> berwarna hijau tua.
+      </li>
+      <li>
+        Sistem akan menampilkan daftar link — <strong>satu kartu per tamu</strong> —
+        di bagian bawah.
+      </li>
+      <li>
+        Pada setiap kartu, gunakan tombol <strong>WhatsApp</strong> atau <strong>Bagikan</strong>
+        untuk mengirim undangan.
+      </li>
+    </ol>
+
+    <img class="screenshot" src="screenshots/02-form-filled.png" alt="Form terisi" />
+    <div class="caption">Gambar 3.1 — Contoh form yang sudah diisi daftar tamu</div>
+
+    <img class="screenshot small" src="screenshots/03-btn-generate.png" alt="Tombol generate" />
+    <div class="caption">Gambar 3.2 — Tombol untuk membuat link</div>
+
+    <img class="screenshot" src="screenshots/04-results.png" alt="Hasil generate" />
+    <div class="caption">Gambar 3.3 — Daftar link yang siap dikirim</div>
+  </div>
+
+  <!-- ==================== BAB 4 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 4</span>
+    <h2>Fitur Tombol</h2>
+
+    <h3>Pada setiap kartu tamu</h3>
+    <img class="screenshot" src="screenshots/05-item-row.png" alt="Satu kartu tamu" />
+    <div class="caption">Gambar 4.1 — Kartu link per tamu &amp; tombol-tombolnya</div>
+
+    <table>
+      <thead>
+        <tr><th>Tombol</th><th>Fungsi</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>WhatsApp</strong> (hijau)</td>
+          <td>Membuka WhatsApp Web/App dengan pesan siap kirim. User memilih kontak tujuan.</td>
+        </tr>
+        <tr>
+          <td><strong>Bagikan</strong> (emas)</td>
+          <td>Muncul di HP modern — buka native share sheet (WA, Telegram, Email, dsb.).</td>
+        </tr>
+        <tr>
+          <td><strong>Salin Pesan</strong></td>
+          <td>Menyalin teks pesan lengkap (nama + isi undangan + link) ke clipboard.</td>
+        </tr>
+        <tr>
+          <td><strong>Link</strong></td>
+          <td>Menyalin hanya URL undangan personal tamu tersebut.</td>
+        </tr>
+        <tr>
+          <td><i>(ikon mata)</i></td>
+          <td>Preview undangan versi tamu tersebut di tab baru.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Toolbar global (di kanan atas hasil)</h3>
+    <img class="screenshot" src="screenshots/06-result-head.png" alt="Toolbar hasil" />
+    <div class="caption">Gambar 4.2 — Toolbar global</div>
+    <ul>
+      <li><strong>Salin Semua</strong> — copy semua nama &amp; link sekaligus (untuk arsip).</li>
+      <li><strong>CSV</strong> — unduh file <code>link-undangan-fitria-barkah.csv</code> untuk dibuka di Excel.</li>
+      <li><strong>Ikon tempat sampah</strong> — kosongkan daftar tamu (ada konfirmasi).</li>
+    </ul>
+  </div>
+
+  <!-- ==================== BAB 5 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 5</span>
+    <h2>Pengaturan Lanjutan</h2>
+
+    <p>
+      Bagian ini tersembunyi secara default. Klik pada baris <strong>“Pengaturan Lanjutan”</strong>
+      untuk membukanya.
+    </p>
+
+    <img class="screenshot" src="screenshots/07-advanced.png" alt="Pengaturan lanjutan" />
+    <div class="caption">Gambar 5.1 — Kartu pengaturan lanjutan setelah dibuka</div>
+
+    <h3>1. Alamat Undangan</h3>
+    <p>
+      Base URL yang akan digunakan untuk menyusun link. Nilai default:
+      <code>https://undangan-fitria-dan-barkah.vercel.app/</code>. Ganti hanya jika alamat
+      undangan berubah (contoh: pindah domain kustom).
+    </p>
+
+    <h3>2. Template Pesan WhatsApp</h3>
+    <p>Teks yang akan dikirim ke tamu. Gunakan variabel berikut:</p>
+    <ul>
+      <li><code>{nama}</code> — otomatis diganti nama tamu.</li>
+      <li><code>{link}</code> — otomatis diganti link personal tamu.</li>
+    </ul>
+    <p>
+      Tombol <strong>“Kembalikan Template Bawaan”</strong> untuk mengembalikan template ke
+      versi default jika terlanjur berantakan.
+    </p>
+
+    <div class="callout warn">
+      <strong>Catatan:</strong> perubahan template &amp; alamat akan tersimpan otomatis di
+      browser. Jika membuka dari komputer/browser lain, isian ini kembali ke default.
+    </div>
+  </div>
+
+  <!-- ==================== BAB 6 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 6</span>
+    <h2>Tampilan Mobile</h2>
+    <p>
+      Generator sudah dioptimalkan untuk digunakan langsung dari HP. Layout otomatis menyesuaikan
+      layar sempit — tombol menjadi lebih besar &amp; menempati satu baris penuh untuk mudah ditekan.
+    </p>
+    <img class="screenshot mobile" src="screenshots/08-mobile.png" alt="Tampilan mobile" />
+    <div class="caption">Gambar 6.1 — Tampilan pada layar HP</div>
+
+    <div class="callout info">
+      <strong>Tips:</strong> pakai HP untuk workflow tercepat — tinggal tap tombol
+      <strong>Bagikan</strong> lalu pilih kontak WhatsApp dari daftar. Tidak perlu buka WA
+      manual sama sekali.
+    </div>
+  </div>
+
+  <!-- ==================== BAB 7 ==================== -->
+  <div class="chapter">
+    <span class="chapter-num">BAB 7</span>
+    <h2>Tips &amp; Troubleshooting</h2>
+
+    <h3>Tips penggunaan efektif</h3>
+    <ul>
+      <li>Siapkan daftar nama tamu dulu di Notes/Excel, lalu copy-paste ke kolom Daftar Tamu.</li>
+      <li>Nama duplikat otomatis dihilangkan — tidak akan ada link ganda.</li>
+      <li>Kirim secara bertahap (batch), misal 10-20 orang per sesi agar tidak keteteran.</li>
+      <li>Simpan hasil <strong>CSV</strong> sebagai backup data siapa saja yang sudah diundang.</li>
+    </ul>
+
+    <h3>Masalah umum</h3>
+    <table>
+      <thead>
+        <tr><th>Masalah</th><th>Solusi</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tombol Bagikan tidak muncul</td>
+          <td>Fitur ini hanya tersedia di HP modern (Android/iOS). Di desktop gunakan tombol WhatsApp / Salin Pesan.</td>
+        </tr>
+        <tr>
+          <td>Nama tamu tidak muncul di undangan</td>
+          <td>Pastikan link yang dikirim mengandung <code>?to=Nama+Tamu</code>. Jangan modifikasi manual.</td>
+        </tr>
+        <tr>
+          <td>Data hilang setelah tutup browser</td>
+          <td>Data disimpan di localStorage. Jika hilang, kemungkinan cache/history browser dibersihkan.</td>
+        </tr>
+        <tr>
+          <td>Klik WhatsApp tidak buka aplikasi</td>
+          <td>Di komputer, WhatsApp Web akan terbuka di tab baru. Pastikan sudah login.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout info" style="margin-top:20px;">
+      <strong>Butuh bantuan?</strong> Hubungi developer / admin website Anda. Manual ini
+      dibuat untuk pemakaian sederhana — tidak diperlukan skill teknis khusus.
+    </div>
+
+    <p class="footer-note">
+      — Selamat menggunakan &amp; semoga acara pernikahan Fitria &amp; Barkah lancar &amp; penuh berkah —
+    </p>
+  </div>
+
+</body>
+</html>
